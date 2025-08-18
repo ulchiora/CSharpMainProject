@@ -35,18 +35,28 @@ namespace UnitBrains.Player
             return base.GetNextStep();
         }
 
-        protected override List<Vector2Int> SelectTargets()
+        protected List<Vector2Int> GetClosestTargetToBase(List<Vector2Int> result)
         {
-            ///////////////////////////////////////
-            // Homework 1.4 (1st block, 4rd module)
-            ///////////////////////////////////////
-            List<Vector2Int> result = GetReachableTargets();
-            while (result.Count > 1)
+            if (result == null || result.Count == 0)
+                return result;
+
+            Vector2Int closestTarget = result[0];
+            float minDistance = DistanceToOwnBase(closestTarget);
+
+            for (int i = 1; i < result.Count; i++)
             {
-                result.RemoveAt(result.Count - 1);
+                float distance = DistanceToOwnBase(result[i]);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    closestTarget = result[i];
+                }
             }
+
+            result.Clear();
+            result.Add(closestTarget);
+
             return result;
-            ///////////////////////////////////////
         }
 
         public override void Update(float deltaTime, float time)
