@@ -35,8 +35,8 @@ namespace UnitBrains.Player
             return base.GetNextStep();
         }
 
-        protected List<Vector2Int> GetClosestTargetToBase(List<Vector2Int> result)
-        {
+        protected override List<Vector2Int> SelectTargets()
+            {
             if (result == null || result.Count == 0)
                 return result;
 
